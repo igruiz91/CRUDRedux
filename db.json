@@ -1,0 +1,19 @@
+{
+    "libros":[
+        {
+            "id":1,
+            "nombre": "Aprendiendo Redux",
+            "precio": 30
+        },
+        {
+            "id":2,
+            "nombre": "Choque de Reyes",
+            "precio": 40
+        },
+        {
+            "id":3,
+            "nombre": "Tormenta de espadas",
+            "precio": 10
+        }
+    ]
+}
