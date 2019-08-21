@@ -7,27 +7,24 @@ import {
 import clienteAxios from '../config/axios';
 
 // crear un nuevo producto -- Funcion principal
-export function crearNuevoProductoAction(producto){
+export function crearNuevoProductoAction(producto) {
     return (dispatch) => {
-        dispatch( nuevoProducto());
+        dispatch(nuevoProducto());
 
         //insertar en la Api
-        clienteAxios.post('/librsos', producto)
-            .then(respuesta =>{
+        clienteAxios.post('/libros', producto)
+            .then(respuesta => {
                 console.log(respuesta);
 
                 //si se inserta corrctamente
-                dispatch(agregarProductoExito(producto))
+                dispatch(agregarProductoExito(producto));
             })
             .catch(error => {
                 console.log(error);
 
                 //si hay un error 
                 dispatch(agregarProductoError(error));
-            })
-
-
-        dispatch( agregarProductoExito(producto));
+            });
     }
 }
 export const nuevoProducto = () => ({
@@ -42,4 +39,4 @@ export const agregarProductoExito = (producto) => ({
 export const agregarProductoError = error => ({
     type: AGREGAR_PRODUCTO_ERROR,
     payload: error
-})
+});
