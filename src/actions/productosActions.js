@@ -4,7 +4,16 @@ import {
     AGREGAR_PRODUCTO_ERROR,
     COMENZAR_DESCARGA_PRODUCTOS,
     DESCARGA_PRODUCTOS_EXITOSA,
-    DESCARGA_PRODUCTOS_ERROR
+    DESCARGA_PRODUCTOS_ERROR,
+    OBTENER_PRODUCTO_ELIMINAR,
+    PRODUCTO_ELIMINADO_EXITO,
+    PRODUCTO_ELIMINADO_ERROR,
+    OBTENER_PRODUCTO_EDITAR,
+    PRODUCTO_EDITAR_EXITO,
+    PRODUCTO_EDITAR_ERROR,
+    COMENZAR_EDICION_PRODUCTO,
+    PRODUCTO_EDITADO_EXITO,
+    PRODUCTO_EDITADO_ERROR
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -15,7 +24,7 @@ export function crearNuevoProductoAction(producto) {
         dispatch(nuevoProducto());
 
         //insertar en la Api
-        clienteAxios.post('/libro', producto)
+        clienteAxios.post('/libros', producto)
             .then(respuesta => {
                 console.log(respuesta);
 
@@ -26,7 +35,7 @@ export function crearNuevoProductoAction(producto) {
                 console.log(error);
 
                 //si hay un error 
-                dispatch(agregarProductoError());
+                dispatch(agregarProductoError(error));
             });
     }
 }
@@ -72,4 +81,97 @@ export const descargaProductosExitosa = (productos) => ({
 
 export const descargaProductosError = () => ({
     type: DESCARGA_PRODUCTOS_ERROR
+});
+
+//Funcioon que elimina un producto especifico
+
+export function borrarProductoAction( id ){
+    return(dispatch) => {
+        dispatch(obtenerProductoEliminar());
+
+        //eliminar de la api
+        clienteAxios.delete(`/libros/${id}`)
+        .then(respuesta => {
+            console.log(respuesta);
+            dispatch(eliminarProductoExito(id));
+
+        }).catch(error =>{
+            console.log(error);
+            dispatch(eliminarProductoError());
+        })
+    }
+}
+
+export const obtenerProductoEliminar = () =>({
+    type: OBTENER_PRODUCTO_ELIMINAR
+});
+
+export const eliminarProductoExito = id =>({
+    type: PRODUCTO_ELIMINADO_EXITO,
+    payload:id
+});
+
+export const eliminarProductoError = () => ({
+    type:PRODUCTO_ELIMINADO_ERROR
+});
+
+//obtener el producto a editar
+export function obtenerProductoEditarAction (id){
+    return (dispatch) =>{
+        dispatch(obtenerProductoAction());
+
+        //obtener producto de la api
+        clienteAxios.get(`/libros/${id}`)
+            .then(respuesta =>{
+                console.log(respuesta.data);
+                dispatch(obtenerProductoEditarExito(respuesta.data))
+            }).catch(error => {
+                console.log(error);
+                dispatch(obtenerProductoEditarError());
+            })
+    }
+}
+
+export const obtenerProductoAction = () =>({
+    type:OBTENER_PRODUCTO_EDITAR
+});
+
+export const obtenerProductoEditarExito = (producto) =>({
+    type: PRODUCTO_EDITAR_EXITO,
+    payload: producto
+});
+
+export const obtenerProductoEditarError = () =>({
+    type: PRODUCTO_EDITAR_ERROR
+})
+
+//modifica un producto en la api y el state
+
+export function editarProductoAction(producto){
+    return (dispatch) =>{
+        dispatch(comenzarEdicionProducto())
+
+        //consultar la api
+        clienteAxios.put(`/libros/${producto.id}`, producto)
+        .then(respuesta =>{
+            console.log(respuesta);
+            dispatch(editarProductoExito(respuesta.data));
+        }).catch(error =>{
+            //console.log(error);
+            dispatch(editarProductoError(error));
+        })
+    }
+}
+
+export const comenzarEdicionProducto = () => ({
+    type:COMENZAR_EDICION_PRODUCTO
+});
+
+export const editarProductoExito = (producto) =>({
+    type: PRODUCTO_EDITADO_EXITO,
+    payload: producto
+});
+
+export const editarProductoError = () =>({
+    type: PRODUCTO_EDITADO_ERROR
 })
