@@ -63,52 +63,52 @@ export default function (state = initialState, action) {
                 producto: {}
             }
         case OBTENER_PRODUCTO_ELIMINAR:
-            return{
+            return {
                 ...state,
-                error:null
+                error: null
             }
         case PRODUCTO_ELIMINADO_EXITO:
-            return{
-            ...state,
-            error:null,
-            productos:state.productos.filter(producto => producto.id !== action.payload)
-        }
-        case PRODUCTO_ELIMINADO_ERROR:
-            return{
-            ...state,
-            error:true
-        }
-        case OBTENER_PRODUCTO_EDITAR:
-            return{
-            ...state,
-            error: null
-        }
-        case PRODUCTO_EDITAR_EXITO:
-            return{
-            ...state,
-            error: null, 
-            producto: action.payload
-        }
-        case PRODUCTO_EDITAR_ERROR:
-            return{
-            ...state,
-            error: true
-        }
-        case COMENZAR_EDICION_PRODUCTO:
-            return{
+            return {
                 ...state,
-                error:null
+                error: null,
+                productos: state.productos.filter(producto => producto.id !== action.payload)
+            }
+        case PRODUCTO_ELIMINADO_ERROR:
+            return {
+                ...state,
+                error: true
+            }
+        case OBTENER_PRODUCTO_EDITAR:
+            return {
+                ...state,
+                error: null
+            }
+        case PRODUCTO_EDITAR_EXITO:
+            return {
+                ...state,
+                error: null,
+                producto: action.payload
+            }
+        case PRODUCTO_EDITAR_ERROR:
+            return {
+                ...state,
+                error: true
+            }
+        case COMENZAR_EDICION_PRODUCTO:
+            return {
+                ...state,
+                error: null
             }
         case PRODUCTO_EDITADO_EXITO:
-                return{
-                    ...state,
-                    error:null,
-                    productos: state.producto.map( producto => producto.id === action.payload.id ? producto = action.payload : producto)
-                }
-        case PRODUCTO_EDITADO_ERROR:
-            return{
+            return {
                 ...state,
-                error:true
+                error: null,
+                productos: state.productos.map(producto => producto.id === action.payload.id ? producto = action.payload : producto)
+            }
+        case PRODUCTO_EDITADO_ERROR:
+            return {
+                ...state,
+                error: true
             }
         default:
             return state;

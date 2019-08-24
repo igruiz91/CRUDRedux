@@ -2,7 +2,7 @@
   "libros": [
     {
       "id": 1,
-      "nombre": "Aprendiendo Redux v2",
+      "nombre": "Aprendiendo Redux en React",
       "precio": "30"
     },
     {
